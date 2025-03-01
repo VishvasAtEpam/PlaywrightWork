@@ -8,11 +8,16 @@ type CustomFixtures = {
   navigateToAdmin: Page
 };
 
+const LoginURL ='https://opensource-demo.orangehrmlive.com/web/index.php/auth/login';
+const userName ='Admin';
+const password = 'admin123';
+
 export const test = baseTest.extend<CustomFixtures>({
   
   navigateToLogin: async({page},use)=>{
     // Navigate to login page
-    await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
+    await page.goto(LoginURL);
+    await page.waitForLoadState("load");
     await use(page);
     page.close();
   },
@@ -20,14 +25,16 @@ export const test = baseTest.extend<CustomFixtures>({
     const loginPage = new OrangeHRMLoginPage(navigateToLogin);
     // Navigate to login page
     //await navigateToLogin.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
-    loginPage.loginToPortal('Admin','admin123');
+    loginPage.loginToPortal(userName,password);
     await use(navigateToLogin);
     //navigateToLogin.close();
   },
   navigateToAdmin: async({loggedInPage},use)=>{
     // Navigate to Admin page
-    await loggedInPage.getByRole('link', { name: 'Admin' }).click();
-    await use(loggedInPage);
+     const adminLink = loggedInPage.getByRole('link', { name: 'Admin' });
+     await adminLink.waitFor({state:"visible"});
+     await adminLink.click();
+     await use(loggedInPage);
    // loggedInPage.close();
   },
 });

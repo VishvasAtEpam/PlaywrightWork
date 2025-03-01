@@ -6,6 +6,7 @@ export class OrangeHRMLoginPage{
     readonly password: Locator;
     readonly loginButton: Locator;
     readonly forgotPassword: Locator;
+    readonly adminLink: Locator;
     constructor(page: Page)
     {
         this.page=page;
@@ -16,8 +17,8 @@ export class OrangeHRMLoginPage{
     }
 
     async loginToPortal(username: string,password: string){
-        await this.userName.fill('Admin');
-        await this.password.fill('admin123');
+        await this.userName.fill(username);
+        await this.password.fill(password);
         await this.loginButton.click();        
     }
 

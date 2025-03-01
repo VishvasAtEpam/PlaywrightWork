@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "pretest": "echo 'Tests Started....'",
+    "test": "npx playwright test",
+    "posttest": "echo 'Tests completed!'",
+    "debug": "npx playwright test --debug",
     "inspect":"npx playwright codegen https://opensource-demo.orangehrmlive.com/web/index.php/auth/login"
   },
   "keywords": [],
