@@ -8,13 +8,13 @@ type CustomFixtures = {
   navigateToAdmin: Page
 };
 
-const LoginURL ='https://opensource-demo.orangehrmlive.com/web/index.php/auth/login';
-const userName ='Admin';
-const password = 'admin123';
+const LoginURL:string ='https://opensource-demo.orangehrmlive.com/web/index.php/auth/login';
+const userName:string ='Admin';
+const password:string = 'admin123';
 
-export const test = baseTest.extend<CustomFixtures>({
-  
-  navigateToLogin: async({page},use)=>{
+export const test = baseTest.extend<CustomFixtures>(
+  {
+    navigateToLogin: async({page},use)=>{
     // Navigate to login page
     await page.goto(LoginURL);
     await page.waitForLoadState("load");

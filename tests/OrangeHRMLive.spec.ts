@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/CustomFixtures';
+//import { expect } from '@playwright/test';
 import { OrangeHRMLoginPage } from '../pages/OrangeHRMLoginPage';
 import { OrangeHRMForgotPasswordPage } from '../pages/OrangeHRMForgotPasswordPage'
 
@@ -39,13 +40,24 @@ test.describe.serial("This is Orange HRM Test Suite", { annotation: { type: 'tes
         // Lets wait for table to load completely.
         await rows.first().waitFor({ state: 'attached' });
         // Now get the cells to fetch employee names
-        (await rows.all()).map(async (row) => {
+
+        for(const row of await rows.all())
+        {
             let nameCell = (await row.getByRole('cell').all()).at(3);
             let employeeName = await nameCell?.textContent();
-            if (employeeName)
+            if(employeeName)
                 names.push(employeeName);
-            console.log(names)
-        })
+        }
+        
+        // map doesnt repl
+        // (await rows.all()).map(async (row) => {
+        //     let nameCell = (await row.getByRole('cell').all()).at(3);
+        //     let employeeName = await nameCell?.textContent();
+        //     if (employeeName)
+        //         names.push(employeeName);
+            
+        // })
+        console.log(names)
     });
 
     test('Delete User Flow Verification from Admin scree', async ({ navigateToAdmin }) => {

@@ -2,7 +2,10 @@ import { test as baseTest, Page} from '@playwright/test';
 import { HomePage } from '../pages/homePage';
 import { CreateAccountPage } from '../pages/createAccountPage';
 
-type pages ={homePage: HomePage, createAccountPage: CreateAccountPage, page: Page}
+type pages ={
+  homePage: HomePage, 
+  createAccountPage: CreateAccountPage, 
+  page: Page}
 
 export const test = baseTest.extend<pages>({
     homePage: async ({ page }, use) => {

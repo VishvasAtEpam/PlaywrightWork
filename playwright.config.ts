@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import globalSetupMethod from './tests/globalSetup';
 
 /**
  * Read environment variables from file.
@@ -12,6 +13,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 const testDir = {normal:'./tests',extended:'./tests'}[process.env.testType||'normal']
+export const role= process.env.ROLE||'Trainee';
 
 export default defineConfig({
   testDir,
@@ -26,16 +28,22 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  use: {
+  timeout: 40_000,
+  expect : {timeout: 8_000},
+  use: {    
     /* Base URL to use in actions like `await page.goto('/')`. */
     //baseURL: process.env.BASE_URL || 'https://dev.example.com',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace:'on',
+
+    trace:'off',
     screenshot: 'on',
     video: 'retain-on-failure',
     headless:true
   },
+
+  globalSetup: './tests/globalSetup.ts',
+  globalTeardown: './tests/globalTeardown.ts',
 
   /* Configure projects for major browsers */
   projects: [
