@@ -22,6 +22,9 @@ jobs:
 
       - name: Install dependencies  # Step 3: Install npm packages
         run: npm install
+      
+      - name: Install http-server   # Step 4: Install Http-server
+        run: npm install -g http-server
 
       - name: Install Playwright Browsers  # Step 4: Install browsers
         run: npx playwright install --with-deps
