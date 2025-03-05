@@ -26,10 +26,18 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : 4,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  //reporter: 'html',
+  reporter: [
+    ['monocart-reporter', {
+      outputFolder: 'monocart-report',  // Customize the report folder
+      autoOpen: true,                   // Automatically open the report after test execution
+      enableScreenshots: true,          // Capture screenshots on failure
+      enableTracing: true,              // Enable tracing for detailed reports
+      enableAttachments: true,          // Include attachments like logs/screenshots
+    }]
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  timeout: 40_000,
-  expect : {timeout: 8_000},
+  
   use: {    
     /* Base URL to use in actions like `await page.goto('/')`. */
     //baseURL: process.env.BASE_URL || 'https://dev.example.com',
