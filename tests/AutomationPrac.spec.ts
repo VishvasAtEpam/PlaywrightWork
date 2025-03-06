@@ -16,13 +16,24 @@ import { generateRandomString } from '../utils/helpers'
 
 test.describe('Automation Practice Test Suite', { annotation: { type: 'test', description: 'test describe' }, tag: ['@smoke', '@regression'] }, () => {
     test.describe.configure({ mode: 'parallel' })
-    test("create new account", async ({ homePage, createAccountPage, page }) => {
+    test("create new account", async ({ homePage, createAccountPage, page },testInfo) => {
 
         await homePage.gotoSignIn();
         const title = await page.evaluate(homePage.extractTitle);
         console.log(title);
 
         expect(page.url()).toContain('my-account');
+        
+        // Page Screenshot at test level
+        const screenshotPath = `test-results/${testInfo.title}-screenshot.png`;
+        console.log(screenshotPath);
+        await page.screenshot({ path: screenshotPath})
+
+        // Attach it to the Playwright report
+        testInfo.attach('Screenshot', {
+            path: screenshotPath,
+            contentType: 'image/png'
+        });
 
         await test.step("Create New Account -> Enter Email ID", async () => {
             const userEmailID = generateRandomEmail();
@@ -33,7 +44,16 @@ test.describe('Automation Practice Test Suite', { annotation: { type: 'test', de
         const firstName = generateRandomString();
         const lastName = generateRandomString();
         createAccountPage.fillAccountCreationForm('Mr', firstName, lastName);
+
         await createAccountPage.accountCreateSuccessLabel.waitFor({ state: 'visible', timeout: 10000 });
+        await createAccountPage.accountCreateSuccessLabel.screenshot({path:'test-results/AccountCreateMessageLabel.png'})
+
+        // Attach it to the Playwright report
+        testInfo.attach('Screenshot', {
+            path: 'test-results/AccountCreateMessageLabel.png',
+            contentType: 'image/png'
+        });
+
         await expect(createAccountPage.accountCreateSuccessLabel).toBeVisible();
         console.log("Account Created successfully");
     })

@@ -34,7 +34,11 @@ export default defineConfig({
       enableScreenshots: true,          // Capture screenshots on failure
       enableTracing: true,              // Enable tracing for detailed reports
       enableAttachments: true,          // Include attachments like logs/screenshots
-    }]
+    }],
+    ['html'],
+    ['junit', { outputFile: 'JUNIT_results.xml' }],
+    ['json', { outputFile: 'JSON_test-results.json' }],
+
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   
